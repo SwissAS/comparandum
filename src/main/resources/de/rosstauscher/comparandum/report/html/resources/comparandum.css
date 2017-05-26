@@ -1,0 +1,33 @@
+body {
+  color: #0D244F;
+  font-family:sans-serif;
+  text-align: center;
+}
+a {
+  font-weight: bolder;
+  color : #0D244F;
+  text-decoration: none;
+}
+a:hover {
+  font-weight: bolder;
+  text-decoration: underline;
+}
+span.PASSED {
+  color: #00A000;
+}
+span.FAILED {
+  color: #A00000;
+}
+div#footer {
+  font-size: small;
+}
+div#images {
+  border-spacing: 5px;
+  padding: 5px;
+  margin:0px auto;
+  border: 1px dotted; 
+}
+div#side_desc {
+  font-size: small;
+  margin:0px auto;
+}

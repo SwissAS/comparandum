@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Test: ${TEST_NAME}</title>
+
+<link rel="stylesheet" type="text/css" href="comparandum.css">
+
+<script type="text/javascript" src="js/jquery_min.js"></script>
+<script type="text/javascript" src="js/jquery_ui_custom_min.js"></script>
+<script type="text/javascript" src="js/jquery_beforeafter_min.js"></script>
+<script type="text/javascript">$(function(){$('#images').beforeAfter({showFullLinks : false});});</script>
+
+</head>
+
+<body>
+<h2>Test Case:</h2>
+<h3>${TEST_NAME}</h3>
+<p>The test has <span class="${TEST_STATUS}">${TEST_STATUS}</span></p>
+<div id="side_desc">Actual | Expected</div>
+<div id="images">
+  <div><img src="${ACTUAL_IMG}" width="${ACTUAL_WIDTH}" height="${ACTUAL_HEIGHT}"></div> 
+  <div><img src="${EXPECTED_IMG}" width="${EXPECTED_WIDTH}" height="${EXPECTED_HEIGHT}"></div>
+</div>
+<p><span class="${TEST_STATUS}">${TEST_MSG}</span></p>
+
+<div id="footer">Created by <a href="http://code.google.com/p/comparandum/">Comparandum</a> at ${TIME_STAMP}</div>    
+</body>
+</html>
