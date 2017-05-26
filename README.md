@@ -1,4 +1,5 @@
 # comparandum
+![Project Logo](https://github.com/SwissAS/comparandum/blob/master/misc/logo.png "Logo")
 Framework to unit test renderers by visually comparing the generated output with a reference image.
 
 ## Introduction
