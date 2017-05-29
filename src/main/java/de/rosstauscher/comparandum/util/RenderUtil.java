@@ -82,7 +82,7 @@ public class RenderUtil {
 		FileOutputStream fout = new FileOutputStream(destination);
 		BufferedOutputStream out = new BufferedOutputStream(fout);
 		try {
-			if (fastEncodeMethod != null) {
+			if (isFastPngEncoderSupported()) {
 				fastEncodeAsPng(img, out); 
 			} else {
 				ImageIO.write(img, DEFAULT_IMAGE_FORMAT, new BufferedOutputStream(fout));
@@ -90,6 +90,14 @@ public class RenderUtil {
 		} finally {
 			IOUtil.closeSilently(fout);
 		}
+	}
+
+	/*************************************************************************
+	 * @return
+	 ************************************************************************/
+	
+	public static boolean isFastPngEncoderSupported() {
+		return fastEncodeMethod != null;
 	}
 
 	/*************************************************************************
