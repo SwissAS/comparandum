@@ -2,11 +2,16 @@ package de.rosstauscher.comparandum.util;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -19,9 +24,28 @@ import de.rosstauscher.comparandum.render.IRenderable;
 
 public class RenderUtil {
 	
+	private static final String USE_FAST_PNG_ENCODER_PROPERTY = "de.rosstauscher.comparandum.fastpng";
+
 	private static final String DEFAULT_IMAGE_FORMAT = "png";
 	
 	public static final int DEFAULT_IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
+	
+	private static Object fastPngEncoder;
+	private static Method fastEncodeMethod;
+	
+	static {
+		if (Boolean.getBoolean(USE_FAST_PNG_ENCODER_PROPERTY)) {
+			try {
+				Class<?> encoderClass = Class.forName("com.objectplanet.image.PngEncoder");
+				fastPngEncoder = encoderClass.newInstance();
+				fastEncodeMethod = encoderClass.getMethod("encode", Image.class, OutputStream.class);
+			} catch (Exception e) {
+				// Cannot load fast png library then fallback to default mode.
+			}
+		}
+		
+		
+	}
 	
 	/*************************************************************************
 	 * Constructor
@@ -55,7 +79,30 @@ public class RenderUtil {
 	
 	public static void renderToDisk(IRenderable r, File destination) throws IOException {
 		BufferedImage img = RenderUtil.renderToImage(r);
-		ImageIO.write(img, DEFAULT_IMAGE_FORMAT, new BufferedOutputStream(new FileOutputStream(destination)));
+		FileOutputStream fout = new FileOutputStream(destination);
+		BufferedOutputStream out = new BufferedOutputStream(fout);
+		try {
+			if (fastEncodeMethod != null) {
+				fastEncodeAsPng(img, out); 
+			} else {
+				ImageIO.write(img, DEFAULT_IMAGE_FORMAT, new BufferedOutputStream(fout));
+			}
+		} finally {
+			IOUtil.closeSilently(fout);
+		}
+	}
+
+	/*************************************************************************
+	 * @param img
+	 * @param out
+	 ************************************************************************/
+	
+	private static void fastEncodeAsPng(BufferedImage img, BufferedOutputStream out) {
+		try {
+			fastEncodeMethod.invoke(fastPngEncoder, img, out);
+		} catch (Exception e) {
+			Logger.getLogger(IOUtil.DEFAULT_LOGGER_NAME).log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
 	}
 
 }
