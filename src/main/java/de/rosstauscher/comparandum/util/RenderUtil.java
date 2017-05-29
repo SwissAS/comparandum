@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +38,13 @@ public class RenderUtil {
 		if (Boolean.getBoolean(USE_FAST_PNG_ENCODER_PROPERTY)) {
 			try {
 				Class<?> encoderClass = Class.forName("com.objectplanet.image.PngEncoder");
-				fastPngEncoder = encoderClass.newInstance();
+				Constructor<?> cc = encoderClass.getConstructor(int.class, int.class);
+
+				// Color type RGB with Alpha channel and compression "Best Speed"
+				int rgba = 6;
+				int bestSpeed = 1;
+				fastPngEncoder = cc.newInstance(rgba, bestSpeed);
+				
 				fastEncodeMethod = encoderClass.getMethod("encode", Image.class, OutputStream.class);
 			} catch (Exception e) {
 				// Cannot load fast png library then fallback to default mode.
@@ -108,6 +115,7 @@ public class RenderUtil {
 	private static void fastEncodeAsPng(BufferedImage img, BufferedOutputStream out) {
 		try {
 			fastEncodeMethod.invoke(fastPngEncoder, img, out);
+			out.flush();
 		} catch (Exception e) {
 			Logger.getLogger(IOUtil.DEFAULT_LOGGER_NAME).log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
