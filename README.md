@@ -33,6 +33,17 @@ The project is feature complete and used productively.
 For some simple usage examples look at the unit tests coming with the project. 
 If you need further information you can read the JavaDoc.
 
+Makes use of the 
+
+(http://maxazan.github.io/jquery-treegrid/ "TreeGrid jQuery") component for the test index page
+
+
+and the 
+
+(http://www.catchmyfame.com/catchmyfame-jquery-plugins/jquery-beforeafter-plugin/ "jQuery BeforeAfter Plugin") under
+CC Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0) - http://creativecommons.org/licenses/by-nc-sa/3.0/
+
+
 Have fun,
 
 Bernd Rosstauscher 
