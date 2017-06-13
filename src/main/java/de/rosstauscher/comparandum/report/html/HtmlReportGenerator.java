@@ -75,13 +75,13 @@ public class HtmlReportGenerator extends AbstractReportGenerator implements IRep
 	
 	private void copyAdditionalResources() {
 		try {
-			copyFileIfNotExisting("comparandum.css");
-			copyFileIfNotExisting("js/handle.gif");
-			copyFileIfNotExisting("js/jquery_beforeafter_min.js");
-			copyFileIfNotExisting("js/jquery_min.js");
-			copyFileIfNotExisting("js/jquery_ui_custom_min.js");
-			copyFileIfNotExisting("js/rt-small.png");
-			copyFileIfNotExisting("js/lt-small.png");
+			copyFileIfNotExisting(this.outputFolder, "comparandum.css");
+			copyFileIfNotExisting(this.outputFolder, "js/handle.gif");
+			copyFileIfNotExisting(this.outputFolder, "js/jquery.beforeafter-1.4.js");
+			copyFileIfNotExisting(this.outputFolder, "js/jquery-1.6.1.min.js");
+			copyFileIfNotExisting(this.outputFolder, "js/jquery-ui-1.8.13.custom.min.js");
+			copyFileIfNotExisting(this.outputFolder, "js/rt-small.png");
+			copyFileIfNotExisting(this.outputFolder, "js/lt-small.png");
 		} catch (IOException e) {
 			throw new ComparandumException("Error copying report resource to output folder.",e);
 		}
@@ -89,15 +89,16 @@ public class HtmlReportGenerator extends AbstractReportGenerator implements IRep
 
 	/*************************************************************************
 	 * Copies the given file from the resources to the output folder.
+	 * @param outputFolder 
 	 * @param resourceName to copy
 	 * @throws IOException on error. 
 	 ************************************************************************/
 	
-	private void copyFileIfNotExisting(String resourceName) throws IOException {
-		File destinationFile = new File(this.outputFolder, resourceName);
+	public static void copyFileIfNotExisting(File outputFolder, String resourceName) throws IOException {
+		File destinationFile = new File(outputFolder, resourceName);
 		if (!destinationFile.exists()) {
 			destinationFile.getParentFile().mkdirs();
-			IOUtil.copyResourceToFile(this.getClass(), "resources/"+resourceName, destinationFile);
+			IOUtil.copyResourceToFile(HtmlReportGenerator.class, "resources/"+resourceName, destinationFile);
 		}
 	}
 

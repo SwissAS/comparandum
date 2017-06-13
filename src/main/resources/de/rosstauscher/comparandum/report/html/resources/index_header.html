@@ -2,7 +2,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+<meta charset="utf-8">
+
 <title>Test Summary:</title>
+
+<script type="text/javascript" src="js/jquery-3.2.1_min.js"></script>
+<script type="text/javascript" src="js/jquery.treegrid-0.3.0.js"></script>
+<script type="text/javascript">
+      $(document).ready(function() {
+        $('.tree').treegrid();
+      });
+</script>
+
 
 <style type="text/css"> 
 body {
@@ -14,7 +25,7 @@ a {
   text-decoration: none
 }
 a:hover {
-  font-weight: bolder;
+    color : #0DAAAA;
 }
 span.PASSED {
   color: #00A000;
@@ -26,6 +37,33 @@ div.footer {
   font-size: small;
 }
 
+.treegrid-indent {
+  width:16px; 
+  height: 16px; 
+  display: inline-block; 
+  position: relative;
+}
+
+.treegrid-expander {
+  width:16px; 
+  height: 16px; 
+  display: inline-block; 
+  position: relative; 
+  cursor: pointer;
+}
+
+.treegrid-expander-expanded{
+  background-image: url(js/collapse.png); 
+}
+
+.treegrid-expander-collapsed{
+  background-image: url(js/expand.png);
+}
+
+.test_path {
+  padding-right: 20px;
+}
+
 </style>
 
 </head>
@@ -33,3 +71,11 @@ div.footer {
 <body>
 <h2>Test Summary:</h2>
 <div class="main">
+
+<h3 class="counter">
+  ${TOTAL_COUNT} Tests,  
+  <span class="PASSED">${PASSED_COUNT} passed,  </span>
+  <span class="FAILED">${FAILED_COUNT} failed</span> 
+</h3>
+
+<table class="tree">
