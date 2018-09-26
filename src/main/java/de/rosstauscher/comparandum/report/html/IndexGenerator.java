@@ -141,9 +141,9 @@ public class IndexGenerator {
 		collectTestResults(reportFolder, rootNode);
 		
 		HtmlReportGenerator.copyFileIfNotExisting(reportFolder, "js/jquery-3.2.1_min.js");
-		HtmlReportGenerator.copyFileIfNotExisting(reportFolder, "js/jquery.treegrid-0.3.0.js");
-		HtmlReportGenerator.copyFileIfNotExisting(reportFolder, "js/collaps.png");
-		HtmlReportGenerator.copyFileIfNotExisting(reportFolder, "js/expand.png");
+//		HtmlReportGenerator.copyFileIfNotExisting(reportFolder, "js/jquery.treegrid-0.3.0.js");
+//		HtmlReportGenerator.copyFileIfNotExisting(reportFolder, "js/collaps.png");
+//		HtmlReportGenerator.copyFileIfNotExisting(reportFolder, "js/expand.png");
 		
 		openIndexFile(reportFolder);
 		try {

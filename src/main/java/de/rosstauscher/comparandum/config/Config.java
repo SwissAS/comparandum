@@ -28,7 +28,7 @@ public class Config {
 	private String testClassName;
 	private String testMethodName;
 	private String parameterValues;
-
+	private int acceptedDistance = -1; 
 	
 	/*************************************************************************
 	 * Constructor
@@ -182,6 +182,26 @@ public class Config {
 	
 	final void setTestMethodParameter(String parameterValues) {
 		this.parameterValues = parameterValues;
+	}
+	
+	/*************************************************************************
+	 * For pHash comparison this is the accepted Hamming distance to consider 
+	 * it still equal.
+	 * @return the accepted Hamming distance, -1 if not set.
+	 ************************************************************************/
+	
+	public int getAcceptedDistance() {
+		return this.acceptedDistance;
+	}
+	
+	/*************************************************************************
+	 * For pHash comparison this sets the accepted Hamming distance to consider 
+	 * it still equal.
+	 * @param acceptedDistance the accepted Hamming distance.
+	 ************************************************************************/
+	
+	final void setAcceptedDistance(int acceptedDistance) {
+		this.acceptedDistance = acceptedDistance;
 	}
 	
 }

@@ -192,6 +192,17 @@ public class ConfigBuilder {
 		return this;
 	}
 	
+	/*************************************************************************
+	 * Activates a mode where we compare only hashes. 
+	 * This allows to work with some tolerance.  
+	 * @param allowedDistance to specify how similar the images should be.
+	 * @return this builder for method chaining.
+	 ************************************************************************/
+	
+	public ConfigBuilder compareHashes(int allowedDistance) {
+		this.context.setAcceptedDistance(allowedDistance);
+		return this;
+	}
 
 	/*************************************************************************
 	 * Builds the test name for the current test run.

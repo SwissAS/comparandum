@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
@@ -38,8 +39,13 @@ public class ImagePHash {
 	}
 	
 	// Returns a 'binary string' (like. 001010111011100010) which is easy to do a hamming distance on. 
-	public String getHash(InputStream is) throws Exception {
+	public String getHash(InputStream is) throws IOException {
 		BufferedImage img = ImageIO.read(is);
+		return getHash(img);
+	}
+	
+	// Returns a 'binary string' (like. 001010111011100010) which is easy to do a hamming distance on. 
+	public String getHash(BufferedImage img) {
 		
 		/* 1. Reduce size. 
 		 * Like Average Hash, pHash starts with a small image. 
@@ -55,13 +61,7 @@ public class ImagePHash {
 		 */
 		img = grayscale(img);
 		
-		double[][] vals = new double[this.size][this.size];
-		
-		for (int x = 0; x < img.getWidth(); x++) {
-			for (int y = 0; y < img.getHeight(); y++) {
-				vals[x][y] = getBlue(img, x, y);
-			}
-		}
+		double[][] vals = extractBlueValues(img);
 		
 		/* 3. Compute the DCT. 
 		 * The DCT separates the image into a collection of frequencies 
@@ -81,16 +81,7 @@ public class ImagePHash {
 		 * since the DC coefficient can be significantly different from 
 		 * the other values and will throw off the average).
 		 */
-		double total = 0;
-		
-		for (int x = 0; x < this.smallerSize; x++) {
-			for (int y = 0; y < this.smallerSize; y++) {
-				total += dctVals[x][y];
-			}
-		}
-		total -= dctVals[0][0];
-		
-		double avg = total / ((this.smallerSize * this.smallerSize) - 1);
+		double avg = computeMeanDctValue(dctVals);
 	
 		/* 6. Further reduce the DCT. 
 		 * This is the magic step. Set the 64 hash bits to 0 or 1 
@@ -102,17 +93,58 @@ public class ImagePHash {
 		 * remains the same; this can survive gamma and color histogram 
 		 * adjustments without a problem.
 		 */
-		String hash = "";
+		return buildHashFromDct(dctVals, avg);
+	}
+
+	/**
+	 * @param dctVals
+	 * @param avg
+	 * @return
+	 */
+	private String buildHashFromDct(double[][] dctVals, double avg) {
+		StringBuilder hash = new StringBuilder("");
 		
 		for (int x = 0; x < this.smallerSize; x++) {
 			for (int y = 0; y < this.smallerSize; y++) {
 				if (x != 0 && y != 0) {
-					hash += (dctVals[x][y] > avg?"1":"0");
+					hash.append(dctVals[x][y] > avg?"1":"0");
 				}
 			}
 		}
 		
-		return hash;
+		return hash.toString();
+	}
+
+	/**
+	 * @param dctVals
+	 * @return
+	 */
+	private double computeMeanDctValue(double[][] dctVals) {
+		double total = 0;
+		
+		for (int x = 0; x < this.smallerSize; x++) {
+			for (int y = 0; y < this.smallerSize; y++) {
+				total += dctVals[x][y];
+			}
+		}
+		total -= dctVals[0][0];
+		
+		return total / ((this.smallerSize * this.smallerSize) - 1);
+	}
+
+	/**
+	 * @param img
+	 * @return
+	 */
+	private double[][] extractBlueValues(BufferedImage img) {
+		double[][] vals = new double[this.size][this.size];
+		
+		for (int x = 0; x < img.getWidth(); x++) {
+			for (int y = 0; y < img.getHeight(); y++) {
+				vals[x][y] = getBlue(img, x, y);
+			}
+		}
+		return vals;
 	}
 	
 	private BufferedImage resize(BufferedImage image, int width,	int height) {

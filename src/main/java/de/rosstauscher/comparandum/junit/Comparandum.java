@@ -10,6 +10,7 @@ import de.rosstauscher.comparandum.filter.FilterList;
 import de.rosstauscher.comparandum.render.IRenderable;
 import de.rosstauscher.comparandum.report.IReportGenerator.TestStatus;
 import de.rosstauscher.comparandum.report.ReportGeneratorUtil;
+import de.rosstauscher.comparandum.util.ImagePHash;
 import de.rosstauscher.comparandum.util.RenderUtil;
 
 /*****************************************************************************
@@ -164,9 +165,34 @@ public class Comparandum {
 		String testPrefix = config.getTestMethodParameter() == null 
 				? "": "["+config.getTestMethodParameter()+"] ";
 		
-		assertEquals(expected, actual, testPrefix);
+		if (config.getAcceptedDistance() >= 0) {
+			assertSimilar(expected, actual, config.getAcceptedDistance(), testPrefix);
+		} else {
+			assertEquals(expected, actual, testPrefix);
+		}
 	}
 	
+	/*************************************************************************
+	 * @param expected
+	 * @param actual
+	 * @param acceptedDistance
+	 * @param testPrefix
+	 ************************************************************************/
+
+	private static void assertSimilar(IRenderable expected, IRenderable actual, int acceptedDistance, String testPrefix) {
+		ImagePHash pHash = new ImagePHash();
+		
+		BufferedImage b1 = RenderUtil.renderToImage(expected);
+		BufferedImage b2 = RenderUtil.renderToImage(actual);
+		
+		String h1 = pHash.getHash(b1);
+		String h2 = pHash.getHash(b2);
+		int dist = pHash.distance(h1, h2);
+		if (dist > acceptedDistance) {
+			org.junit.Assert.fail(testPrefix+" pHash distance is "+dist+" allowed is "+ acceptedDistance);
+		}
+	}
+
 	/*************************************************************************
 	 * @param renderable
 	 * @param config
