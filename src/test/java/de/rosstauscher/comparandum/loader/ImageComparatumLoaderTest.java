@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 
 import org.junit.Test;
 
+import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.render.IRenderable;
 import de.rosstauscher.comparandum.util.ComparandumException;
 
@@ -17,8 +18,6 @@ import de.rosstauscher.comparandum.util.ComparandumException;
  ****************************************************************************/
 
 public class ImageComparatumLoaderTest {
-
-	private static final File TEST_FILE = new File("test/resources/test1.png");
 	
 	/*************************************************************************
 	 * Unit test
@@ -26,7 +25,7 @@ public class ImageComparatumLoaderTest {
 	 ************************************************************************/
 	@Test
 	public void loadImageShouldWork() {
-		ImageFileLoader loader = new ImageFileLoader(TEST_FILE);
+		ImageFileLoader loader = new ImageFileLoader(TestHelper.TEST_FILE1);
 		IRenderable r = loader.load();
 		assertTrue(r.getDimension().width > 0);
 		assertTrue(r.getDimension().height > 0);
@@ -51,7 +50,7 @@ public class ImageComparatumLoaderTest {
 		File f = File.createTempFile("cmp_junit", null);
 		f.deleteOnExit();
 
-		ImageFileLoader loader = new ImageFileLoader(TEST_FILE);
+		ImageFileLoader loader = new ImageFileLoader(TestHelper.TEST_FILE1);
 		IRenderable r = loader.load();
 
 		loader = new ImageFileLoader(f);
@@ -66,7 +65,7 @@ public class ImageComparatumLoaderTest {
 	 ************************************************************************/
 	@Test(expected=ComparandumException.class)
 	public void storeShouldFailForInvalidPath() {
-		ImageFileLoader loader = new ImageFileLoader(TEST_FILE);
+		ImageFileLoader loader = new ImageFileLoader(TestHelper.TEST_FILE1);
 		IRenderable r = loader.load();
 
 		File f = new File(File.separator);

@@ -6,11 +6,11 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
 
+import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
 import de.rosstauscher.comparandum.config.ConfigBuilder;
 import de.rosstauscher.comparandum.junit.Comparandum;
@@ -24,8 +24,6 @@ import de.rosstauscher.comparandum.report.ReportGeneratorUtil;
  ****************************************************************************/
 
 public class ReportGeneratorUtilTest {
-
-	private static final File TEST_FILE1 = new File("test/resources/test1.png");
 
 	/** 
 	 * Helper class for the tests 
@@ -71,7 +69,7 @@ public class ReportGeneratorUtilTest {
 	public void testGenerateTestReport() throws IOException {
 		System.setProperty(Comparandum.PROPERTY_REPORT_GENERATOR, TestGenerator.class.getName());
 		
-		Config testContext = new ConfigBuilder().compareToImage(TEST_FILE1).build();
+		Config testContext = new ConfigBuilder().compareToImage(TestHelper.TEST_FILE1).build();
 		ReportGeneratorUtil.invokeReportGenerator(TestStatus.PASSED, "Test has passed", R1, testContext);
 
 		assertTrue(TestGenerator.invoked);

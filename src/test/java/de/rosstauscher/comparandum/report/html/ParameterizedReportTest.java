@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
 import de.rosstauscher.comparandum.config.ConfigBuilder;
 import de.rosstauscher.comparandum.junit.Comparandum;
@@ -32,8 +33,6 @@ import de.rosstauscher.comparandum.util.IOUtil;
 
 @RunWith(Parameterized.class)
 public class ParameterizedReportTest {
-
-	private static final File TEST_FILE1 = new File("test/resources/test1.png");
 
 	/** 
 	 * Helper class for the tests 
@@ -106,7 +105,7 @@ public class ParameterizedReportTest {
 	@Test
 	public void fileNameShouldIncludeParameter() throws IOException {
 		Config testContext = new ConfigBuilder()
-				.compareToImage(TEST_FILE1)
+				.compareToImage(TestHelper.TEST_FILE1)
 				.parameterizedWith(this.testParam)
 				.build();
 		

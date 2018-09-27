@@ -8,6 +8,28 @@
 
 <script type="text/javascript" src="js/jquery-3.2.1_min.js"></script>
 
+<script type="text/javascript">
+
+function showOnlyFailed() {
+	showAll();
+	$("td").filter(function() {
+	    return $(this).text() === "PASSED";
+	}).parent().hide();
+}
+
+function showOnlyPassed() {
+	showAll();
+	$("td").filter(function() {
+	    return $(this).text() === "FAILED";
+	}).parent().hide();
+}
+
+function showAll() {
+	$("td").parent().show();
+}
+
+</script>
+
 <style type="text/css"> 
 body {
   color: #0D244F;
@@ -83,9 +105,9 @@ div.footer {
 <div class="main">
 
 <h3 class="counter">
-  ${TOTAL_COUNT} Tests,  
-  <span class="PASSED">${PASSED_COUNT} passed,  </span>
-  <span class="FAILED">${FAILED_COUNT} failed</span> 
+  <span onclick="showAll()">${TOTAL_COUNT} Tests</span>,  
+  <span class="PASSED" onclick="showOnlyPassed()">${PASSED_COUNT} passed,  </span>
+  <span class="FAILED" onclick="showOnlyFailed()">${FAILED_COUNT} failed</span> 
 </h3>
 
 <table class="tree">

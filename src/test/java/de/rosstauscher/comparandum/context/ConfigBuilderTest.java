@@ -1,12 +1,12 @@
 package de.rosstauscher.comparandum.context;
 
 import java.awt.Rectangle;
-import java.io.File;
 import java.net.MalformedURLException;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
 import de.rosstauscher.comparandum.config.ConfigBuilder;
 import de.rosstauscher.comparandum.filter.ExcludeAreaFilter;
@@ -48,8 +48,7 @@ public class ConfigBuilderTest {
 	@Test
 	public void buildLoadFromUrl() throws MalformedURLException {
 		ConfigBuilder bldr = new ConfigBuilder();
-		File f = new File("test/resources/test1.png");
-		Config config = bldr.compareToImage(f.toURI().toURL()).build();
+		Config config = bldr.compareToImage(TestHelper.TEST_FILE1.toURI().toURL()).build();
 		Assert.assertNotNull(config.getComparatum());
 	}
 	
@@ -59,8 +58,7 @@ public class ConfigBuilderTest {
 	@Test
 	public void buildLoadFromFile() {
 		ConfigBuilder bldr = new ConfigBuilder();
-		File f = new File("test/resources/test1.png");
-		Config config = bldr.compareToImage(f).build();
+		Config config = bldr.compareToImage(TestHelper.TEST_FILE1).build();
 		Assert.assertNotNull(config.getComparatum());
 	}
 	
@@ -115,6 +113,17 @@ public class ConfigBuilderTest {
 		ConfigBuilder bldr = new ConfigBuilder();
 		Config config = bldr.build();
 		Assert.assertEquals("buildShouldUpdateTestMethodName", config.getTestMethodName());
+	}
+	
+	/*************************************************************************
+	 * Unit test
+	 ************************************************************************/
+	@Test
+	public void buildShouldSetPHashDistance() {
+		ConfigBuilder bldr = new ConfigBuilder();
+		bldr.compareHashes(10);
+		Config config = bldr.build();
+		Assert.assertEquals(10, config.getAcceptedDistance());
 	}
 
 

@@ -12,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
 import de.rosstauscher.comparandum.config.ConfigBuilder;
 import de.rosstauscher.comparandum.render.IRenderable;
@@ -25,8 +26,6 @@ import de.rosstauscher.comparandum.util.IOUtil;
  ****************************************************************************/
 
 public class HtmlReportGeneratorTest {
-
-	private static final File TEST_FILE1 = new File("test/resources/test1.png");
 
 	/** 
 	 * Helper class for the tests 
@@ -76,7 +75,7 @@ public class HtmlReportGeneratorTest {
 	public void testGenerateTestReport() throws IOException {
 		HtmlReportGenerator generator = new HtmlReportGenerator();
 		generator.setOutputFolder(testFolder);
-		Config testConfig = new ConfigBuilder().compareToImage(TEST_FILE1).build();
+		Config testConfig = new ConfigBuilder().compareToImage(TestHelper.TEST_FILE1).build();
 		generator.generateTestReport(TestStatus.PASSED, "Test has passed", R1, testConfig);
 		
 		String testName = ReportGeneratorUtil.buildTestName(

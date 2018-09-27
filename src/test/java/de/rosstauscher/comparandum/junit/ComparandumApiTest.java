@@ -1,13 +1,15 @@
 package de.rosstauscher.comparandum.junit;
 
+import static org.junit.Assert.fail;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.io.File;
 import java.net.MalformedURLException;
 
 import org.junit.Test;
 
+import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
 import de.rosstauscher.comparandum.config.ConfigBuilder;
 import de.rosstauscher.comparandum.loader.ImageFileLoader;
@@ -19,10 +21,6 @@ import de.rosstauscher.comparandum.render.IRenderable;
  ****************************************************************************/
 
 public class ComparandumApiTest {
-	
-	private static final File TEST_FILE2 = new File("test/resources/test2.png");
-
-	private static final File TEST_FILE1 = new File("test/resources/test1.png");
 
 	/** 
 	 * Helper class for the tests 
@@ -67,6 +65,44 @@ public class ComparandumApiTest {
 	public void assertEqualsShouldWork() {
 		Comparandum.assertEquals(R1, R1);
 	}
+	
+	/*************************************************************************
+	 * Unit test 
+	 ************************************************************************/
+	@Test
+	public void assertPhashShouldWork() {
+		Config config = new ConfigBuilder()
+			.compareThis(R1)
+			.compareTo(R1)
+			.compareHashes(0)
+			.build();
+		
+		Comparandum.assertEquals(config);
+	}
+	
+	/*************************************************************************
+	 * Unit test 
+	 ************************************************************************/
+	@Test
+	public void assertPhashShouldFail() {
+
+		Config config = new ConfigBuilder()
+			.compareThis(R1)
+			.compareTo(R2)
+			.compareHashes(2)
+			.build();
+		
+		try {
+			Comparandum.assertEquals(config);
+		} catch (AssertionError e) {
+			// Expected error failure message
+			if (e.getMessage().contains("pHash distance is")) {
+				return;
+			}
+		}
+		fail("Expected failure but difference was accepted?");
+	}
+
 
 	/*************************************************************************
 	 * Unit test 
@@ -89,11 +125,11 @@ public class ComparandumApiTest {
 	@Test
 	public void exlucdedAreaShouldBeIgnoredOnCompare() throws MalformedURLException {
 		IRenderable actual = new ImageFileLoader(
-				TEST_FILE2).load(); 
+				TestHelper.TEST_FILE2).load(); 
 
 		Config config = new ConfigBuilder()
 		.compareThis(actual)
-		.compareToImage(TEST_FILE1)
+		.compareToImage(TestHelper.TEST_FILE1)
 		.ignore(0, 0, 20, 20)
 		.ignore(20, 20, 40, 40)
 		.build();
