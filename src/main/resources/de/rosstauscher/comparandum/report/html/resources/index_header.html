@@ -42,6 +42,9 @@ a {
 a:hover {
     color : #0DAAAA;
 }
+.CLICKABLE:hover {
+	cursor: pointer;
+}
 span.PASSED {
   color: #00A000;
 }
@@ -105,9 +108,9 @@ div.footer {
 <div class="main">
 
 <h3 class="counter">
-  <span onclick="showAll()">${TOTAL_COUNT} Tests</span>,  
-  <span class="PASSED" onclick="showOnlyPassed()">${PASSED_COUNT} passed,  </span>
-  <span class="FAILED" onclick="showOnlyFailed()">${FAILED_COUNT} failed</span> 
+  <span class="CLICKABLE" onclick="showAll()">${TOTAL_COUNT} Tests</span>,  
+  <span class="CLICKABLE PASSED" onclick="showOnlyPassed()">${PASSED_COUNT} passed,  </span>
+  <span class="CLICKABLE FAILED" onclick="showOnlyFailed()">${FAILED_COUNT} failed</span> 
 </h3>
 
 <table class="tree">
