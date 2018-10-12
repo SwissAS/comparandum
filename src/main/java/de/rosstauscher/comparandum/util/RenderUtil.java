@@ -26,6 +26,7 @@ import de.rosstauscher.comparandum.render.IRenderable;
 public class RenderUtil {
 	
 	private static final String USE_FAST_PNG_ENCODER_PROPERTY = "de.rosstauscher.comparandum.fastpng";
+	private static final String DISABLE_TEXT_AA = "de.rosstauscher.comparandum.disableTextAA";
 
 	private static final String DEFAULT_IMAGE_FORMAT = "png";
 	
@@ -72,8 +73,14 @@ public class RenderUtil {
 		Dimension d = r.getDimension();
 		BufferedImage bi = new BufferedImage(d.width, d.height, DEFAULT_IMAGE_TYPE);
 		Graphics2D g = bi.createGraphics();
+
+		if (Boolean.getBoolean(DISABLE_TEXT_AA)) {
+			g = new Graphics2dNoTextAA(g);
+		}
+		
 		r.paint(g);
 		g.dispose();
+		
 		return bi;
 	}
 	
