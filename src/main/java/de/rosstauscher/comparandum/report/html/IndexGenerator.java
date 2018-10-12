@@ -238,7 +238,8 @@ public class IndexGenerator {
 		if (!node.getChildren().isEmpty()) {
 			testStatus += " (<span class=\"PASSED\">"+node.getPassed()+"</span> / ";
 			testStatus += "<span class=\"FAILED\">"+node.getFailed()+"</span> / ";
-			testStatus += "<span class=\"TOTAL\">"+node.getFailed()+node.getPassed()+"</span>)";
+			int total = node.getFailed() + node.getPassed();
+			testStatus += "<span class=\"TOTAL\">"+total+"</span>)";
 		} else {
 			content = content.replace("${FILE}", node.getFileName());
 		}
