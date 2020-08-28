@@ -1,7 +1,7 @@
 package de.rosstauscher.comparandum.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.rosstauscher.comparandum.render.IRenderable;
 
@@ -19,7 +19,7 @@ import de.rosstauscher.comparandum.render.IRenderable;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-public class RenderUtilTest {
+class RenderUtilTest {
 	
 	/** 
 	 * Helper class for the tests 
@@ -43,7 +43,7 @@ public class RenderUtilTest {
 	 * Test method
 	 ************************************************************************/
 	@Test
-	public void testRenderToImage() {
+	void testRenderToImage() {
 		BufferedImage image = RenderUtil.renderToImage(R1);
 		assertEquals(32, image.getWidth());
 		assertEquals(32, image.getHeight());
@@ -54,7 +54,7 @@ public class RenderUtilTest {
 	 * @throws IOException on error. 
 	 ************************************************************************/
 	@Test
-	public void testRenderToDisk() throws IOException {
+	void testRenderToDisk() throws IOException {
 		File testFile = File.createTempFile("comparandum", ".png");
 		RenderUtil.renderToDisk(R1, testFile);
 		assertTrue(testFile.exists());

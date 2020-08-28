@@ -1,6 +1,6 @@
 package de.rosstauscher.comparandum.report.html;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,9 +8,9 @@ import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
@@ -25,7 +25,7 @@ import de.rosstauscher.comparandum.util.IOUtil;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-public class HtmlReportGeneratorTest {
+class HtmlReportGeneratorTest {
 
 	/** 
 	 * Helper class for the tests 
@@ -50,7 +50,7 @@ public class HtmlReportGeneratorTest {
 	/*************************************************************************
 	 * Setup some stuff.
 	 ************************************************************************/
-	@BeforeClass
+	@BeforeAll
 	public static void setup() {
 		testFolder = IOUtil.createTempFolder();
 	}
@@ -58,7 +58,7 @@ public class HtmlReportGeneratorTest {
 	/*************************************************************************
 	 * Cleanup stuff.
 	 ************************************************************************/
-	@AfterClass
+	@AfterAll
 	public static void teardown() {
 		File[] allTempFiles = testFolder.listFiles();
 		for (File file : allTempFiles) {
@@ -93,7 +93,7 @@ public class HtmlReportGeneratorTest {
 	 * @throws IOException on error.
 	 ************************************************************************/
 	@Test
-	public void testIndexGeneration() throws IOException {
+	void testIndexGeneration() throws IOException {
 		IndexGenerator generator = new IndexGenerator();
 		generator.generateIndexFile(testFolder);
 		assertTrue(new File(testFolder, "index.html").length() > 0);

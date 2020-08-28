@@ -1,5 +1,7 @@
 package de.rosstauscher.comparandum.junit;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
@@ -95,7 +97,7 @@ public class Comparandum {
 				p1 = d1.getPixel(x, y, p1);
 				p2 = d2.getPixel(x, y, p2);
 				if (!Arrays.equals(p1, p2)) {
-					org.junit.Assert.fail(testPrefix+"Pixels differ at "+x+" / "+ y);
+					fail(testPrefix+"Pixels differ at "+x+" / "+ y);
 				}
 			}
 		}
@@ -111,7 +113,7 @@ public class Comparandum {
 		Dimension d1 = expected.getDimension();
 		Dimension d2 = actual.getDimension();
 		if (!d1.equals(d2)) {
-			org.junit.Assert.fail("Dimensions do not match expected "+ d1 + " but was " + d2);
+			fail("Dimensions do not match expected "+ d1 + " but was " + d2);
 		}
 	}
 	
@@ -189,7 +191,7 @@ public class Comparandum {
 		String h2 = pHash.getHash(b2);
 		int dist = pHash.distance(h1, h2);
 		if (dist > acceptedDistance) {
-			org.junit.Assert.fail(testPrefix+" pHash distance is "+dist+" allowed is "+ acceptedDistance);
+			fail(testPrefix+" pHash distance is "+dist+" allowed is "+ acceptedDistance);
 		}
 	}
 

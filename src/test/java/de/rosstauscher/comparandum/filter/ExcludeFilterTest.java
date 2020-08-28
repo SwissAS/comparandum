@@ -1,11 +1,13 @@
 package de.rosstauscher.comparandum.filter;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.rosstauscher.comparandum.junit.Comparandum;
 import de.rosstauscher.comparandum.render.IRenderable;
@@ -15,7 +17,7 @@ import de.rosstauscher.comparandum.render.IRenderable;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-public class ExcludeFilterTest {
+class ExcludeFilterTest {
 	
 	private static final IRenderable R1 = new IRenderable() {
 		@Override
@@ -49,7 +51,7 @@ public class ExcludeFilterTest {
 	 * Unit test 
 	 ************************************************************************/
 	@Test
-	public void excludedAreaShouldBeIgnored() {
+	void excludedAreaShouldBeIgnored() {
 		ExcludeAreaFilter f = new ExcludeAreaFilter(
 				new Rectangle(0, 0, 10, 10));
 		IRenderable expected = f.applyTo(R1);
@@ -62,7 +64,7 @@ public class ExcludeFilterTest {
 	 * Unit test 
 	 ************************************************************************/
 	@Test
-	public void excludedFilterShouldNotExcludeAll() {
+	void excludedFilterShouldNotExcludeAll() {
 		ExcludeAreaFilter f = new ExcludeAreaFilter(
 				new Rectangle(0, 0, 9, 9));
 		IRenderable expected = f.applyTo(R1);
@@ -73,7 +75,7 @@ public class ExcludeFilterTest {
 			// Must fail for this tests to pass.
 			return; 
 		}
-		org.junit.Assert.fail("Filter does cover to mutch");
+		fail("Filter does cover to mutch");
 	}
 
 }

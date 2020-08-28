@@ -1,6 +1,9 @@
 package de.rosstauscher.comparandum.filter;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -9,11 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import de.rosstauscher.comparandum.filter.FilterList;
-import de.rosstauscher.comparandum.filter.IFilter;
-import de.rosstauscher.comparandum.filter.ScaleFilter;
 import de.rosstauscher.comparandum.render.IRenderable;
 
 /*****************************************************************************
@@ -21,13 +21,13 @@ import de.rosstauscher.comparandum.render.IRenderable;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-public class FilterListTest {
+class FilterListTest {
 
 	/**
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#size()}.
 	 */
 	@Test
-	public void testSize() {
+	void testSize() {
 		FilterList list = new FilterList();
 		assertEquals(0, list.size());
 		list.add(new ScaleFilter(10, 10));
@@ -38,7 +38,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#isEmpty()}.
 	 */
 	@Test
-	public void testIsEmpty() {
+	void testIsEmpty() {
 		FilterList list = new FilterList();
 		assertTrue(list.isEmpty());
 		list.add(new ScaleFilter(10, 10));
@@ -49,7 +49,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#contains(java.lang.Object)}.
 	 */
 	@Test
-	public void testContains() {
+	void testContains() {
 		FilterList list = new FilterList();
 		ScaleFilter f = new ScaleFilter(10, 10);
 		list.add(f);
@@ -60,7 +60,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#iterator()}.
 	 */
 	@Test
-	public void testIterator() {
+	void testIterator() {
 		FilterList list = new FilterList();
 		ScaleFilter f = new ScaleFilter(10, 10);
 		list.add(f);
@@ -73,7 +73,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#toArray()}.
 	 */
 	@Test
-	public void testToArray() {
+	void testToArray() {
 		FilterList list = new FilterList();
 		list.add(new ScaleFilter(10, 10));
 		Object[] actual = list.toArray();
@@ -84,7 +84,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#toArray(T[])}.
 	 */
 	@Test
-	public void testToArrayTArray() {
+	void testToArrayTArray() {
 		FilterList list = new FilterList();
 		list.add(new ScaleFilter(10, 10));
 		IFilter[] expected = new IFilter[1];
@@ -96,7 +96,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#add(de.rosstauscher.comparandum.filter.IFilter)}.
 	 */
 	@Test
-	public void testAddIFilter() {
+	void testAddIFilter() {
 		FilterList list = new FilterList();
 		list.add(new ScaleFilter(10, 10));
 		assertEquals(1, list.size());
@@ -106,7 +106,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#remove(java.lang.Object)}.
 	 */
 	@Test
-	public void testRemoveObject() {
+	void testRemoveObject() {
 		FilterList list = new FilterList();
 		ScaleFilter f = new ScaleFilter(10, 10);
 		list.add(f);
@@ -119,7 +119,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#containsAll(java.util.Collection)}.
 	 */
 	@Test
-	public void testContainsAll() {
+	void testContainsAll() {
 		FilterList list = new FilterList();
 		ScaleFilter f = new ScaleFilter(10, 10);
 		ScaleFilter f2 = new ScaleFilter(10, 20);
@@ -135,7 +135,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#addAll(java.util.Collection)}.
 	 */
 	@Test
-	public void testAddAllCollectionOfQextendsIFilter() {
+	void testAddAllCollectionOfQextendsIFilter() {
 		List<IFilter> l = new ArrayList<IFilter>();
 		l.add(new ScaleFilter(10, 10));
 		l.add(new ScaleFilter(10, 20));
@@ -148,7 +148,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#addAll(int, java.util.Collection)}.
 	 */
 	@Test
-	public void testAddAllIntCollectionOfQextendsIFilter() {
+	void testAddAllIntCollectionOfQextendsIFilter() {
 		List<IFilter> l = new ArrayList<IFilter>();
 		l.add(new ScaleFilter(10, 10));
 		l.add(new ScaleFilter(10, 20));
@@ -162,7 +162,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#removeAll(java.util.Collection)}.
 	 */
 	@Test
-	public void testRemoveAll() {
+	void testRemoveAll() {
 		List<IFilter> l = new ArrayList<IFilter>();
 		l.add(new ScaleFilter(10, 10));
 		l.add(new ScaleFilter(10, 20));
@@ -177,7 +177,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#retainAll(java.util.Collection)}.
 	 */
 	@Test
-	public void testRetainAll() {
+	void testRetainAll() {
 		List<IFilter> l = new ArrayList<IFilter>();
 		l.add(new ScaleFilter(10, 10));
 		l.add(new ScaleFilter(10, 20));
@@ -193,7 +193,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#clear()}.
 	 */
 	@Test
-	public void testClear() {
+	void testClear() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 10));
 		list.add(new ScaleFilter(10, 20));
@@ -205,7 +205,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#get(int)}.
 	 */
 	@Test
-	public void testGet() {
+	void testGet() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 10));
 		ScaleFilter f = new ScaleFilter(10, 20);
@@ -217,7 +217,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#set(int, de.rosstauscher.comparandum.filter.IFilter)}.
 	 */
 	@Test
-	public void testSet() {
+	void testSet() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 10));
 		ScaleFilter f = new ScaleFilter(10, 20);
@@ -229,7 +229,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#add(int, de.rosstauscher.comparandum.filter.IFilter)}.
 	 */
 	@Test
-	public void testAddIntIFilter() {
+	void testAddIntIFilter() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 10));
 		ScaleFilter f = new ScaleFilter(10, 20);
@@ -242,7 +242,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#remove(int)}.
 	 */
 	@Test
-	public void testRemoveInt() {
+	void testRemoveInt() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 10));
 		ScaleFilter f = new ScaleFilter(10, 20);
@@ -255,7 +255,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#indexOf(java.lang.Object)}.
 	 */
 	@Test
-	public void testIndexOf() {
+	void testIndexOf() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 10));
 		ScaleFilter f = new ScaleFilter(10, 20);
@@ -267,7 +267,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#lastIndexOf(java.lang.Object)}.
 	 */
 	@Test
-	public void testLastIndexOf() {
+	void testLastIndexOf() {
 		FilterList list = new FilterList();	
 		ScaleFilter f = new ScaleFilter(10, 20);
 		list.add(f);
@@ -279,7 +279,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#listIterator()}.
 	 */
 	@Test
-	public void testListIterator() {
+	void testListIterator() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 20));
 		list.add(new ScaleFilter(20, 20));
@@ -294,7 +294,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#listIterator(int)}.
 	 */
 	@Test
-	public void testListIteratorInt() {
+	void testListIteratorInt() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 20));
 		list.add(new ScaleFilter(20, 20));
@@ -309,7 +309,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#subList(int, int)}.
 	 */
 	@Test
-	public void testSubList() {
+	void testSubList() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 20));
 		ScaleFilter f = new ScaleFilter(20, 20);
@@ -323,7 +323,7 @@ public class FilterListTest {
 	 * Test method for {@link de.rosstauscher.comparandum.filter.FilterList#applyTo(de.rosstauscher.comparandum.render.IRenderable)}.
 	 */
 	@Test
-	public void testApply() {
+	void testApply() {
 		FilterList list = new FilterList();	
 		list.add(new ScaleFilter(10, 10));
 		list.add(new ScaleFilter(20, 20));
