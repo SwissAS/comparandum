@@ -26,7 +26,7 @@ The project is feature complete and used productively.
 
 ## Dependencies
 
-+ Java 1.8 but Java 1.8 or newer is recommended
++ Java 1.8 or newer
 + JUnit 5 
 
 ## More documentation
