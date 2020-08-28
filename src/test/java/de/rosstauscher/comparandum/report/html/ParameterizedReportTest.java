@@ -1,6 +1,6 @@
 package de.rosstauscher.comparandum.report.html;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,12 +10,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
@@ -31,8 +29,7 @@ import de.rosstauscher.comparandum.util.IOUtil;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-@RunWith(Parameterized.class)
-public class ParameterizedReportTest {
+class ParameterizedReportTest {
 
 	/** 
 	 * Helper class for the tests 
@@ -53,22 +50,11 @@ public class ParameterizedReportTest {
 	};
 
 	private static File testFolder;
-	private final String testParam;
-
-	/*************************************************************************
-	 * Constructor
-	 * @param parameter used as test input
-	 ************************************************************************/
-	
-	public ParameterizedReportTest(String parameter) {
-		super();
-		this.testParam = parameter;
-	}
 	
 	/*************************************************************************
 	 * Setup some stuff.
 	 ************************************************************************/
-	@BeforeClass
+	@BeforeAll
 	public static void setup() {
 		testFolder = IOUtil.createTempFolder();
 		System.setProperty(Comparandum.PROPERTY_REPORT_FOLDER, testFolder.getAbsolutePath());
@@ -77,7 +63,7 @@ public class ParameterizedReportTest {
 	/*************************************************************************
 	 * Cleanup stuff.
 	 ************************************************************************/
-	@AfterClass
+	@AfterAll
 	public static void teardown() {
 		System.clearProperty(Comparandum.PROPERTY_REPORT_FOLDER);
 		File[] allTempFiles = testFolder.listFiles();
@@ -90,7 +76,6 @@ public class ParameterizedReportTest {
 	/*************************************************************************
 	 * @return the test data.
 	 ************************************************************************/
-	@Parameters
 	public static Collection<Object[]> getTestData() {
 		return Arrays.asList(
 				new Object[][]{
@@ -100,13 +85,15 @@ public class ParameterizedReportTest {
 	
 	/*************************************************************************
 	 * Test method
+	 * @param testParam represents one entity of getTestData
 	 * @throws IOException on error.
 	 ************************************************************************/
-	@Test
-	public void fileNameShouldIncludeParameter() throws IOException {
+	@ParameterizedTest
+	@MethodSource("getTestData")
+	public void fileNameShouldIncludeParameter(String testParam) throws IOException {
 		Config testContext = new ConfigBuilder()
 				.compareToImage(TestHelper.TEST_FILE1)
-				.parameterizedWith(this.testParam)
+				.parameterizedWith(testParam)
 				.build();
 		
 		ReportGeneratorUtil.invokeReportGenerator(TestStatus.PASSED, "Test has passed", R1, testContext);
@@ -114,11 +101,11 @@ public class ParameterizedReportTest {
 		File[] generatedFiles = testFolder.listFiles();
 		int found = 0;
 		for (File file : generatedFiles) {
-			if (file.getName().contains("["+this.testParam+"]")) {
+			if (file.getName().contains("[" + testParam + "]")) {
 				found++;
 			}
 		}
-		assertEquals("Expected 3 generated files for: "+this.testParam, 3, found);
+		assertEquals(3, found, "Expected 3 generated files for: "+ testParam);
 	}
 
 }

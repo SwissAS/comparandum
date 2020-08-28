@@ -1,13 +1,13 @@
 package de.rosstauscher.comparandum.junit;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.net.MalformedURLException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
@@ -20,7 +20,7 @@ import de.rosstauscher.comparandum.render.IRenderable;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-public class ComparandumApiTest {
+class ComparandumApiTest {
 
 	/** 
 	 * Helper class for the tests 
@@ -62,7 +62,7 @@ public class ComparandumApiTest {
 	 * Unit test 
 	 ************************************************************************/
 	@Test
-	public void assertEqualsShouldWork() {
+	void assertEqualsShouldWork() {
 		Comparandum.assertEquals(R1, R1);
 	}
 	
@@ -70,7 +70,7 @@ public class ComparandumApiTest {
 	 * Unit test 
 	 ************************************************************************/
 	@Test
-	public void assertPhashShouldWork() {
+	void assertPhashShouldWork() {
 		Config config = new ConfigBuilder()
 			.compareThis(R1)
 			.compareTo(R1)
@@ -84,7 +84,7 @@ public class ComparandumApiTest {
 	 * Unit test 
 	 ************************************************************************/
 	@Test
-	public void assertPhashShouldFail() {
+	void assertPhashShouldFail() {
 
 		Config config = new ConfigBuilder()
 			.compareThis(R1)
@@ -108,14 +108,14 @@ public class ComparandumApiTest {
 	 * Unit test 
 	 ************************************************************************/
 	@Test
-	public void assertEqualsShouldFailOnDifference() {
+	void assertEqualsShouldFailOnDifference() {
 		try {
 			Comparandum.assertEquals(R1, R2);
 		} catch (AssertionError e) {
 			// This must fail for the test to pass
 			return; 
 		}
-		org.junit.Assert.fail("Assert is expected to fail.");
+		fail("Assert is expected to fail.");
 	}
 	
 	/*************************************************************************
@@ -123,7 +123,7 @@ public class ComparandumApiTest {
 	 * @throws MalformedURLException on error. 
 	 ************************************************************************/
 	@Test
-	public void exlucdedAreaShouldBeIgnoredOnCompare() throws MalformedURLException {
+	void exlucdedAreaShouldBeIgnoredOnCompare() throws MalformedURLException {
 		IRenderable actual = new ImageFileLoader(
 				TestHelper.TEST_FILE2).load(); 
 

@@ -1,12 +1,13 @@
 package de.rosstauscher.comparandum.loader;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.render.IRenderable;
@@ -17,14 +18,14 @@ import de.rosstauscher.comparandum.util.ComparandumException;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-public class ImageComparatumLoaderTest {
+class ImageComparatumLoaderTest {
 	
 	/*************************************************************************
 	 * Unit test
 	 * @throws MalformedURLException
 	 ************************************************************************/
 	@Test
-	public void loadImageShouldWork() {
+	void loadImageShouldWork() {
 		ImageFileLoader loader = new ImageFileLoader(TestHelper.TEST_FILE1);
 		IRenderable r = loader.load();
 		assertTrue(r.getDimension().width > 0);
@@ -35,10 +36,12 @@ public class ImageComparatumLoaderTest {
 	 * Unit test
 	 * @throws MalformedURLException
 	 ************************************************************************/
-	@Test(expected=ComparandumException.class)
-	public void loadShouldFailForUnknownFile() {
-		ImageFileLoader loader = new ImageFileLoader(new File("NotValid"));
-		loader.load();
+	@Test
+	void loadShouldFailForUnknownFile() {
+		assertThrows(ComparandumException.class, () -> {
+			ImageFileLoader loader = new ImageFileLoader(new File("NotValid"));
+			loader.load();
+		});
 	}
 	
 	/*************************************************************************
@@ -46,7 +49,7 @@ public class ImageComparatumLoaderTest {
 	 * @throws IOException 
 	 ************************************************************************/
 	@Test
-	public void storeShouldWriteComparatumFile() throws IOException {
+	void storeShouldWriteComparatumFile() throws IOException {
 		File f = File.createTempFile("cmp_junit", null);
 		f.deleteOnExit();
 
@@ -63,17 +66,18 @@ public class ImageComparatumLoaderTest {
 	 * Unit test
 	 * @throws MalformedURLException
 	 ************************************************************************/
-	@Test(expected=ComparandumException.class)
-	public void storeShouldFailForInvalidPath() {
-		ImageFileLoader loader = new ImageFileLoader(TestHelper.TEST_FILE1);
-		IRenderable r = loader.load();
-
-		File f = new File(File.separator);
-		loader = new ImageFileLoader(f);
-		loader.storeAsComparatum(r);
-		
-		assertTrue(f.exists());	}
-
-
+	@Test
+	void storeShouldFailForInvalidPath() {
+		assertThrows(ComparandumException.class, () -> {
+			ImageFileLoader loader = new ImageFileLoader(TestHelper.TEST_FILE1);
+			IRenderable r = loader.load();
+	
+			File f = new File(File.separator);
+			loader = new ImageFileLoader(f);
+			loader.storeAsComparatum(r);
+			
+			assertTrue(f.exists());
+		});
+	}
 }
 

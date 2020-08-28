@@ -1,14 +1,14 @@
 package de.rosstauscher.comparandum.report.html;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.rosstauscher.comparandum.TestHelper;
 import de.rosstauscher.comparandum.config.Config;
@@ -23,7 +23,7 @@ import de.rosstauscher.comparandum.report.ReportGeneratorUtil;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-public class ReportGeneratorUtilTest {
+class ReportGeneratorUtilTest {
 
 	/** 
 	 * Helper class for the tests 
@@ -80,7 +80,7 @@ public class ReportGeneratorUtilTest {
 	 * @throws IOException on error.
 	 ************************************************************************/
 	@Test
-	public void buildTestNameWithoutPackageShouldWork() throws IOException {
+	void buildTestNameWithoutPackageShouldWork() throws IOException {
 		String actual = ReportGeneratorUtil.buildTestName("ABC", "method", "123");
 		assertEquals("ABC__method[123]", actual);
 	}
@@ -90,7 +90,7 @@ public class ReportGeneratorUtilTest {
 	 * @throws IOException on error.
 	 ************************************************************************/
 	@Test
-	public void buildTestNameWithPackageShouldWork() throws IOException {
+	void buildTestNameWithPackageShouldWork() throws IOException {
 		String actual = ReportGeneratorUtil.buildTestName("a.b.c.ClassName", "method", "123");
 		assertEquals("a_b_c_ClassName__method[123]", actual);
 	}
@@ -100,7 +100,7 @@ public class ReportGeneratorUtilTest {
 	 * @throws IOException on error.
 	 ************************************************************************/
 	@Test
-	public void buildTestNameWithoutParameterShouldWork() throws IOException {
+	void buildTestNameWithoutParameterShouldWork() throws IOException {
 		String actual = ReportGeneratorUtil.buildTestName("ABC", "method", null);
 		assertEquals("ABC__method", actual);
 	}

@@ -1,10 +1,12 @@
 package de.rosstauscher.comparandum.filter;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.rosstauscher.comparandum.junit.Comparandum;
 import de.rosstauscher.comparandum.render.IRenderable;
@@ -14,7 +16,7 @@ import de.rosstauscher.comparandum.render.IRenderable;
  * @author Bernd Rosstauscher (java@rosstauscher.de) Copyright 2011
  ****************************************************************************/
 
-public class ScaleFilterTest {
+class ScaleFilterTest {
 	
 	private static final IRenderable R1 = new IRenderable() {
 		@Override
@@ -46,7 +48,7 @@ public class ScaleFilterTest {
 	 * Unit test 
 	 ************************************************************************/
 	@Test
-	public void scaleFilterShouldWork() {
+	void scaleFilterShouldWork() {
 		ScaleFilter f = new ScaleFilter(20, 20);
 		IRenderable actual = f.applyTo(R2);
 		Comparandum.assertEquals(R1, actual);
@@ -56,7 +58,7 @@ public class ScaleFilterTest {
 	 * Unit test 
 	 ************************************************************************/
 	@Test
-	public void scaledDifferentlyShouldFail() {
+	void scaledDifferentlyShouldFail() {
 		ScaleFilter f = new ScaleFilter(20, ScaleFilter.SAME);
 		IRenderable actual = f.applyTo(R2);
 		try {
@@ -65,7 +67,7 @@ public class ScaleFilterTest {
 			// Must fail for this tests to pass.
 			return; 
 		}
-		org.junit.Assert.fail("Filter does not scale correctly");
+		fail("Filter does not scale correctly");
 	}
 
 }

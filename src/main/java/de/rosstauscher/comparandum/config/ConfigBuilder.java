@@ -233,13 +233,13 @@ public class ConfigBuilder {
 	private static boolean isTestMethod(String className, String methodName) {
 		try {
 			Class<?> cls = Class.forName(className);
-			Method method = cls.getMethod(methodName);
-			return method.getAnnotation(org.junit.Test.class) != null;
-		} catch (SecurityException e) {
+			for (Method m: cls.getMethods()) {
+				if (m.getName().equals(methodName) && (m.getAnnotation(org.junit.jupiter.api.Test.class) != null || m.getAnnotation(org.junit.jupiter.params.ParameterizedTest.class) != null)) {
+					return true;
+				}
+			}
 			return false;
-		} catch (ClassNotFoundException e) {
-			return false;
-		} catch (NoSuchMethodException e) {
+		} catch (SecurityException|ClassNotFoundException e) {
 			return false;
 		}
 	}
