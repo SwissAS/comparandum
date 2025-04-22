@@ -3,6 +3,7 @@ package de.rosstauscher.comparandum.report.html;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -53,12 +54,12 @@ public class HtmlReportGenerator extends AbstractReportGenerator implements IRep
 		htmlPageTemplate = htmlPageTemplate.replace("${TEST_STATUS}", this.testStatus.toString());
 
 		Dimension actualSize = this.renderable.getDimension();
-		htmlPageTemplate = htmlPageTemplate.replace("${ACTUAL_IMG}", this.actualImageName);
+		htmlPageTemplate = htmlPageTemplate.replace("${ACTUAL_IMG}", URLEncoder.encode(this.actualImageName, "UTF-8"));
 		htmlPageTemplate = htmlPageTemplate.replace("${ACTUAL_WIDTH}", Integer.toString(actualSize.width));
 		htmlPageTemplate = htmlPageTemplate.replace("${ACTUAL_HEIGHT}", Integer.toString(actualSize.height));
 
 		Dimension expectedSize = this.testConfig.getComparatum().getDimension();
-		htmlPageTemplate = htmlPageTemplate.replace("${EXPECTED_IMG}", this.expectedImageName);
+		htmlPageTemplate = htmlPageTemplate.replace("${EXPECTED_IMG}",  URLEncoder.encode(this.expectedImageName, "UTF-8"));
 		htmlPageTemplate = htmlPageTemplate.replace("${EXPECTED_WIDTH}", Integer.toString(expectedSize.width));
 		htmlPageTemplate = htmlPageTemplate.replace("${EXPECTED_HEIGHT}", Integer.toString(expectedSize.height));
 		

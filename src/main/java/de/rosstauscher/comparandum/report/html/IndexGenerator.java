@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -241,7 +242,7 @@ public class IndexGenerator {
 			int total = node.getFailed() + node.getPassed();
 			testStatus += "<span class=\"TOTAL\">"+total+"</span>)";
 		} else {
-			content = content.replace("${FILE}", node.getFileName());
+			content = content.replace("${FILE}", URLEncoder.encode(node.getFileName(), "UTF-8"));
 		}
 		
 		content = content.replace("${TEST_STATUS}", testStatus);
